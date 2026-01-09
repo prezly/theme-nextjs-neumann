@@ -112,7 +112,7 @@ export default async function MainLayout(props: Props) {
                         <main className={styles.content}>{children}</main>
                         <SubscribeForm />
                         <Boilerplate localeCode={localeCode} />
-                        <NeumannFooter />
+                        <NeumannFooter localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />
                     <CookieConsent localeCode={localeCode} />
