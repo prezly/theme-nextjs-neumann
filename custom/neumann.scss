@@ -318,6 +318,7 @@ main[class*="content"] {
   // Use calc to add back the padding the container removes
   width: calc(100% + 80px); // 40px padding on each side
   max-width: 1600px;
+  max-height: 660px;
   margin-left: -40px !important;
   margin-right: -40px !important;
 }
