@@ -305,19 +305,21 @@ footer [class*="link"] {
 // Container / Layout
 // ============================================
 // Wider container like Neumann (1600px), always centered
-.container {
+.container,
+main[class*="content"] {
   width: 100%;
   max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
 }
 
-// Hero / Featured Story - same width constraints as header
+// Hero / Featured Story - break out of main's padding to match header width
 [class*="HighlightedStoryCard_container"] {
-  width: 100% !important;
-  max-width: 1600px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  // Use calc to add back the padding the container removes
+  width: calc(100% + 80px); // 40px padding on each side
+  max-width: 1600px;
+  margin-left: -40px !important;
+  margin-right: -40px !important;
 }
 
 // ============================================
