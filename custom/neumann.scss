@@ -304,27 +304,29 @@ footer [class*="link"] {
 // ============================================
 // Container / Layout
 // ============================================
-// Wider container like Neumann (1600px) and always centered
+// Wider container like Neumann (1600px)
 .container,
 [class*="container"]:not([class*="Dropdown_container"]) {
   max-width: 1600px;
-  margin-left: auto !important;
-  margin-right: auto !important;
 }
 
-// Hero / Featured Story - break out of container to be wider
-[class*="HighlightedStoryCard_container"] {
-  width: calc(100% + 160px); // Expand beyond container padding
-  max-width: 1600px;
-  margin-left: -80px !important;
-  margin-right: -80px !important;
-
-  @media (max-width: 1600px) {
-    width: 100vw;
-    max-width: 100vw;
-    margin-left: calc(-50vw + 50%) !important;
-    margin-right: calc(-50vw + 50%) !important;
+// Center container only on very wide screens (larger than max-width)
+@media (min-width: 1601px) {
+  .container {
+    margin-left: auto;
+    margin-right: auto;
   }
+}
+
+// Hero / Featured Story - full viewport width
+[class*="HighlightedStoryCard_container"] {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
 }
 
 // ============================================
