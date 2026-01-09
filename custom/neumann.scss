@@ -312,15 +312,12 @@ footer [class*="link"] {
   margin-right: auto;
 }
 
-// Hero / Featured Story - full viewport width
+// Hero / Featured Story - same width constraints as header
 [class*="HighlightedStoryCard_container"] {
-  width: 100vw !important;
-  max-width: 100vw !important;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw !important;
-  margin-right: -50vw !important;
+  width: 100% !important;
+  max-width: 1600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 // ============================================
