@@ -304,10 +304,27 @@ footer [class*="link"] {
 // ============================================
 // Container / Layout
 // ============================================
-// Wider container like Neumann (1600px)
+// Wider container like Neumann (1600px) and always centered
 .container,
-[class*="container"] {
+[class*="container"]:not([class*="Dropdown_container"]) {
   max-width: 1600px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+// Hero / Featured Story - break out of container to be wider
+[class*="HighlightedStoryCard_container"] {
+  width: calc(100% + 160px); // Expand beyond container padding
+  max-width: 1600px;
+  margin-left: -80px !important;
+  margin-right: -80px !important;
+
+  @media (max-width: 1600px) {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+  }
 }
 
 // ============================================
