@@ -325,7 +325,23 @@ main[class*="content"] {
 
 // Background gradient on main (gray to black, starts below hero)
 main {
-  background: linear-gradient(180deg, #2d2d2d, #000);
+  position: relative;
+  background: transparent;
+
+  // Gradient as pseudo-element positioned behind content but not covering hero
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #2d2d2d, #000);
+    z-index: -1;
+  }
+}
+
+// Ensure hero image displays above the gradient
+[class*="HighlightedStoryCard"] {
+  position: relative;
+  z-index: 1;
 }
 
 // ============================================
