@@ -192,20 +192,10 @@ button[class*="Dropdown_buttonWithMobileDisplay"],
   letter-spacing: 0.05em;
 }
 
-// Card category tags
-[class*="StoryCard"] [class*="categories"] a,
-[class*="CategoriesList"] a {
-  background-color: rgba($neumann-text-secondary, 0.2);
-  color: $neumann-text-secondary;
-  border-radius: 2px;
-  padding: 4px 8px;
-  font-size: 12px;
-  text-transform: uppercase;
-
-  &:hover {
-    background-color: rgba($neumann-orange, 0.2);
-    color: $neumann-orange;
-  }
+// Hide categories on story cards (Neumann design doesn't show them)
+[class*="StoryCard"] [class*="categories"],
+[class*="HighlightedStoryCard"] [class*="categories"] {
+  display: none !important;
 }
 
 // Image wrapper in cards - no border
