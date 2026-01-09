@@ -46,15 +46,9 @@ function withShortenedTitles(options: Languages.Option[]): LanguagesDropdown.Opt
             (locale, _, locales): LanguagesDropdown.Option => ({
                 code: locale.code,
                 href: locale.href,
-                // Neumann: Show only language name without region in dropdown button
-                title: simplifyLanguageName(Intl.getLanguageDisplayName(locale, locales)),
+                title: Intl.getLanguageDisplayName(locale, locales),
             }),
         );
-}
-
-// Extract just the language name from "English (Germany)" -> "English"
-function simplifyLanguageName(name: string): string {
-    return name.replace(/\s*\([^)]+\)\s*$/, '');
 }
 
 function withHrefOverrides(
