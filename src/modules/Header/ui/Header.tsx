@@ -1,11 +1,6 @@
 'use client';
 
-import type {
-    Category,
-    Newsroom,
-    NewsroomCompanyInformation,
-    TranslatedCategory,
-} from '@prezly/sdk';
+import type { Newsroom, NewsroomCompanyInformation, TranslatedCategory } from '@prezly/sdk';
 import type { Locale } from '@prezly/theme-kit-nextjs';
 import { translations } from '@prezly/theme-kit-nextjs';
 import type { UploadedImage } from '@prezly/uploadcare';
@@ -18,7 +13,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { FormattedMessage, useIntl } from '@/adapters/client';
 import { Button, ButtonLink } from '@/components/Button';
-import { CategoriesBar } from '@/components/CategoriesBar';
 import { Link } from '@/components/Link';
 import { useDevice } from '@/hooks';
 import { IconClose, IconExternalLink, IconMenu, IconSearch } from '@/icons';
@@ -27,8 +21,8 @@ import type { ThemeSettings } from '@/theme-settings';
 import type { SearchSettings } from '@/types';
 import { isPreviewActive } from '@/utils';
 
-import { Categories } from './Categories';
 import { Logo, LogoPlaceholder } from './Logo';
+import { NeumannCategoriesNav } from '@/custom/NeumannCategoriesNav';
 
 import styles from './Header.module.scss';
 
@@ -44,13 +38,10 @@ interface Props {
     localeCode: Locale.Code;
     newsroom: Newsroom;
     information: NewsroomCompanyInformation;
-    categories: Category[];
     translatedCategories: TranslatedCategory[];
     searchSettings?: SearchSettings;
     children?: ReactNode;
-    displayedGalleries: number;
     displayedLanguages: number;
-    categoriesLayout: ThemeSettings['categories_layout'];
     logoSize: ThemeSettings['logo_size'];
     mainSiteUrl: string | null;
     mainSiteLabel: string | null;
@@ -61,10 +52,8 @@ export function Header({
     localeCode,
     newsroom,
     information,
-    categories,
     translatedCategories,
     searchSettings,
-    displayedGalleries,
     displayedLanguages,
     children,
     newsrooms,
@@ -76,13 +65,14 @@ export function Header({
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setSearchOpen] = useState(false);
-    const [measurement, headerRef] = useMeasure<HTMLElement>();
+    const [, headerRef] = useMeasure<HTMLElement>();
     const isSearchPage = useBroadcastedPageTypeCheck('search');
     const isPreviewMode = process.env.PREZLY_MODE === 'preview';
     const isPreview = isPreviewActive();
+    const numberOfPublicGalleries = newsroom.public_galleries_number;
 
     const shouldShowMenu =
-        categories.length > 0 || displayedLanguages > 0 || displayedGalleries > 0;
+        translatedCategories.length > 0 || displayedLanguages > 0 || numberOfPublicGalleries > 0;
 
     function alignMobileHeader() {
         if (!isMobile) {
@@ -168,25 +158,8 @@ export function Header({
         return mainSiteLabelPreview || props.mainSiteLabel;
     }
 
-    const categoriesLayout = useMemo(() => {
-        const categoriesLayoutPreview = isPreviewMode && searchParams.get('categories_layout');
-        if (categoriesLayoutPreview === 'dropdown' || categoriesLayoutPreview === 'bar') {
-            return categoriesLayoutPreview;
-        }
-
-        return props.categoriesLayout;
-    }, [isPreviewMode, props.categoriesLayout, searchParams]);
-
-    const isCategoriesLayoutBar = categoriesLayout === 'bar';
-    const isCategoriesLayoutDropdown = categoriesLayout === 'dropdown' || isMobile;
-    const numberOfPublicGalleries = newsroom.public_galleries_number;
-    const shouldShowSearchText =
-        !isMobile &&
-        [
-            isPreview || numberOfPublicGalleries > 0,
-            mainSiteUrl,
-            isCategoriesLayoutDropdown && translatedCategories.length > 0,
-        ].filter(Boolean).length < 2;
+    // Neumann: Always show search text label
+    const shouldShowSearchText = !isMobile;
 
     return (
         <>
@@ -208,7 +181,8 @@ export function Header({
                         )}
 
                         <div className={styles.navigationWrapper}>
-                            {searchSettings && !newsroom.is_hub && (
+                            {/* Neumann: Search moved inside nav, this toggle only for mobile */}
+                            {searchSettings && !newsroom.is_hub && isMobile && (
                                 <ButtonLink
                                     href={{
                                         routeName: 'search',
@@ -219,16 +193,12 @@ export function Header({
                                         [styles.hidden]: isMenuOpen,
                                         [styles.close]: isSearchOpen,
                                     })}
-                                    icon={isSearchOpen && isMobile ? IconClose : IconSearch}
+                                    icon={isSearchOpen ? IconClose : IconSearch}
                                     onClick={toggleSearchWidget}
                                     aria-expanded={isSearchOpen}
                                     title={formatMessage(translations.search.title)}
                                     aria-label={formatMessage(translations.search.title)}
-                                >
-                                    {shouldShowSearchText
-                                        ? formatMessage(translations.search.title)
-                                        : undefined}
-                                </ButtonLink>
+                                />
                             )}
 
                             {shouldShowMenu && (
@@ -278,25 +248,42 @@ export function Header({
                                             </ButtonLink>
                                         </li>
                                     )}
-                                    {isCategoriesLayoutDropdown && (
-                                        <Categories
-                                            categories={categories}
-                                            localeCode={localeCode}
-                                            marginTop={measurement?.height}
-                                            translatedCategories={translatedCategories}
-                                        />
-                                    )}
+                                    {/* Neumann: Show categories as direct links */}
+                                    <NeumannCategoriesNav
+                                        categories={translatedCategories}
+                                        itemClassName={styles.navigationItem}
+                                        linkClassName={styles.navigationButton}
+                                    />
                                     {mainSiteUrl && (
                                         <li className={styles.navigationItem}>
                                             <ButtonLink
                                                 href={mainSiteUrl.href}
                                                 variation="navigation"
-                                                icon={IconExternalLink}
-                                                iconPlacement="right"
                                                 className={styles.navigationButton}
                                             >
                                                 {getMainSiteLabel() || humanizeUrl(mainSiteUrl)}
                                             </ButtonLink>
+                                        </li>
+                                    )}
+                                    {/* Neumann: Search icon before language selector, icon only */}
+                                    {searchSettings && !newsroom.is_hub && (
+                                        <li className={styles.navigationItem}>
+                                            <ButtonLink
+                                                href={{
+                                                    routeName: 'search',
+                                                    params: { localeCode },
+                                                }}
+                                                variation="navigation"
+                                                className={classNames(
+                                                    styles.navigationButton,
+                                                    styles.searchInNav,
+                                                )}
+                                                icon={IconSearch}
+                                                onClick={toggleSearchWidget}
+                                                aria-expanded={isSearchOpen}
+                                                title={formatMessage(translations.search.title)}
+                                                aria-label={formatMessage(translations.search.title)}
+                                            />
                                         </li>
                                     )}
                                     {children}
@@ -319,7 +306,7 @@ export function Header({
                     </nav>
                 </div>
             </header>
-            {isCategoriesLayoutBar && <CategoriesBar translatedCategories={translatedCategories} />}
+            {/* Neumann: No separate categories bar - categories are in header */}
         </>
     );
 }

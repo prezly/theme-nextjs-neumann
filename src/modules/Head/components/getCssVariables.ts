@@ -52,6 +52,11 @@ export function getCssVariables(settings: ThemeSettings): Record<string, string>
     const borderColor = tinycolor(text_color).setAlpha(0.2);
     const borderColorSecondary = tinycolor(text_color).setAlpha(0.3);
 
+    // Neumann-specific card background (darker than secondary background)
+    const cardBackgroundColor = tinycolor(background_color).isLight()
+        ? tinycolor(background_color).darken(8)
+        : tinycolor(background_color).lighten(18); // #2d2d2d for black background
+
     return {
         '--prezly-font-family': getFontFamily(font),
         '--prezly-font-family-secondary': getSecondaryFontFamily(font),
@@ -65,6 +70,7 @@ export function getCssVariables(settings: ThemeSettings): Record<string, string>
         '--prezly-background-color-secondary': backgroundColorSecondary.toHex8String(),
         '--prezly-background-color-intermediate': backgroundColorIntermidiate.toHex8String(),
         '--prezly-background-color-tertiary': backgroundColorTertiary.toHex8String(),
+        '--prezly-card-background-color': cardBackgroundColor.toHex8String(),
         '--prezly-accent-color': accent_color,
         '--prezly-accent-color-active': accentColorActive.toHex8String(),
         '--prezly-accent-color-hover': accentColorHover.toHex8String(),

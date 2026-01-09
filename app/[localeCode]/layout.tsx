@@ -20,8 +20,8 @@ import {
 } from '@/modules/Broadcast';
 import { CookieConsentProvider } from '@/modules/CookieConsent';
 import { CookieConsent } from '@/modules/CookieConsent/CookieConsent';
-import { Footer } from '@/modules/Footer';
 import { Branding, Preconnect } from '@/modules/Head';
+import { NeumannFooter } from '@/custom/NeumannFooter';
 import { Header } from '@/modules/Header';
 import { IntlProvider } from '@/modules/Intl';
 import { Notifications } from '@/modules/Notifications';
@@ -32,6 +32,7 @@ import { SubscribeForm } from '@/modules/SubscribeForm';
 import '@prezly/content-renderer-react-js/styles.css';
 import '@prezly/uploadcare-image/build/styles.css';
 import 'modern-normalize/modern-normalize.css';
+import '@/custom/fonts.css';
 import '@/styles/styles.globals.scss';
 
 import styles from './layout.module.scss';
@@ -111,7 +112,7 @@ export default async function MainLayout(props: Props) {
                         <main className={styles.content}>{children}</main>
                         <SubscribeForm />
                         <Boilerplate localeCode={localeCode} />
-                        <Footer localeCode={localeCode} />
+                        <NeumannFooter />
                     </div>
                     <ScrollToTopButton />
                     <CookieConsent localeCode={localeCode} />

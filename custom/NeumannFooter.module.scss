@@ -1,0 +1,123 @@
+@use '../src/styles/variables' as *;
+@use '../src/styles/mixins' as *;
+
+// Neumann brand colors
+$neumann-black: #000000;
+$neumann-orange: #ef7b0b;
+$neumann-text-primary: #ffffff;
+$neumann-text-secondary: #c1c1c1;
+
+.footer {
+    background-color: $neumann-black;
+    color: $neumann-text-secondary;
+    padding: $spacing-8 0;
+    border-top: 1px solid rgba($neumann-text-secondary, 0.2);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-4;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-8;
+    margin-bottom: $spacing-8;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+        gap: $spacing-6;
+    }
+
+    @include tablet-only {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.column {
+    // Column styling
+}
+
+.heading {
+    color: $neumann-text-primary;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 $spacing-4;
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list li {
+    margin-bottom: $spacing-2;
+}
+
+.link {
+    color: $neumann-text-secondary;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.6;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $neumann-orange;
+    }
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-6;
+
+    img {
+        max-height: 40px;
+        width: auto;
+    }
+}
+
+.copyright {
+    text-align: center;
+    color: $neumann-text-secondary;
+    font-size: 14px;
+    margin-bottom: $spacing-4;
+}
+
+.legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    font-size: 13px;
+
+    @include mobile-only {
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-2;
+    }
+}
+
+.legalLink {
+    color: $neumann-text-secondary;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $neumann-orange;
+    }
+}
+
+.separator {
+    color: rgba($neumann-text-secondary, 0.5);
+    margin: 0 $spacing-2;
+
+    @include mobile-only {
+        display: none;
+    }
+}

@@ -64,40 +64,39 @@ export type StoryActions = Pick<
 >;
 
 export const DEFAULT_THEME_SETTINGS: ThemeSettings = {
-    accent_color: '#3b82f6',
-    background_color: '#ffffff',
-    categories_layout: 'dropdown',
-    font: Font.INTER,
-    footer_background_color: '#111827',
-    footer_text_color: '#ffffff',
-    full_width_featured_story: false,
-    header_background_color: '#ffffff',
+    // Neumann brand colors
+    accent_color: '#ef7b0b', // Neumann orange
+    background_color: '#000000', // Black background
+    categories_layout: 'dropdown', // Categories in header row
+    font: Font.ROBOTO, // Closest to FF Unit Pro (will be overridden with custom font)
+    footer_background_color: '#000000',
+    footer_text_color: '#c1c1c1',
+    full_width_featured_story: true, // Neumann has full-width hero
+    header_background_color: '#000000',
     header_image_placement: 'below',
-    header_link_color: '#4b5563',
+    header_link_color: '#c1c1c1', // Gray nav links
     layout: 'grid',
-    logo_size: 'medium',
+    logo_size: 'large',
     main_logo: null,
-    main_site_label: null,
-    main_site_url: null,
+    main_site_label: 'Sennheiser',
+    main_site_url: 'https://newsroom.sennheiser.com/',
     show_date: true,
-    show_featured_categories: true,
+    show_featured_categories: false, // Neumann uses nav categories
     sharing_actions: [
         SocialNetwork.FACEBOOK,
         SocialNetwork.TWITTER,
         SocialNetwork.LINKEDIN,
-        SocialNetwork.THREADS,
         SocialNetwork.WHATSAPP,
-        SocialNetwork.TELEGRAM,
     ],
     sharing_placement: ['bottom'],
     show_copy_content: true,
     show_copy_url: true,
-    show_subtitle: false,
+    show_subtitle: true,
     show_read_more: true,
     show_download_pdf: true,
     show_download_assets: true,
-    story_card_variant: 'default',
-    text_color: '#374151',
+    story_card_variant: 'boxed', // Cards with background
+    text_color: '#c1c1c1', // Gray text
 };
 
 export const FONT_FAMILY = {
